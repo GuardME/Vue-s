@@ -1,0 +1,260 @@
+// tanggal 13 sampai update survey
+-- ternyata watch itu buat update di lokal dlu
+-- ternyata reusable componen logic di header survey
+-- pahamin dlu konsep state management besok
+
+// cara buat vite vuexnpm init vite vue
+
+// cara kerja notification
+
+pertama buat state :
+   notification: {
+      show: false,
+      message: 'message',
+      type: 'success',
+    }
+    lalu dipanggil di default layout
+    yang mana computed itu buat manggil state nya
+
+
+  // dari yang gua pahamin state vuex ini :
+  jadi kondisi awal itu ada di state
+  dimana surveys ini miliki nilai default
+  surveys: {
+    loading: false, masi gabisa muncul
+    data: [], data nya masi array kosong
+  }
+  lalu dibuat lah action buat dapetin api
+  getSurveys({commit}) {
+      commit('setSurveysLoading', true)
+      return axiosClient.get("/survey").then((res) => {
+        commit("setSurveys", res.data)
+        commit("setSurveysLoading", false)
+        return res;
+      });
+    },
+  sebuah action yang mempunyai props commit 
+   setSurveysLoading: (state, loading) => {
+      state.surveys.loading = loading;
+    },
+     saveSurvey: (state, survey) => {
+      state.surveys = [...state.surveys, survey.data];
+    },
+
+    proses nya tuh dia dari state awal kosong terus si acion nya ini ngelakuin sebuah aksi
+    ntah dapetin api atau sebuah aksi yang lain lalu di commit yang mana commit ini akan lempar data ke state awal
+    lalu di view manggil lah sebuah store action ini dan di computed buat reactive 
+
+
+
+
+
+
+// Fake API
+
+  // const tmpSurveys =  [
+//   {
+//     id: 100,
+//     title: "Muhammad Ramadan Yosi Pratama",
+//     slug: "muhammad-ramadan-yosi-pratama",
+//     status: "draft",
+//     image: "https://pbs.twimg.com/profile_images/1118059535003017221/9ZwEYqj2_400x400.png",
+//     description: "Nama gua adalah rama. <br>Gua adalah web developer",
+//     created_at: "2022-02-02 18:00:00",
+//     updated_at: "2022-02-02 18:00:00",
+//     expire_date: "2022-02-02 18:00:00",
+//     questions: [
+//       {
+//         id: 1,
+//         type: "select",
+//         question: "From Which country you are",
+//         description: null,
+//         data: {
+//           options: [
+//             {uuid: "001", text: "Indonesia" },
+//             {
+//               uuid: "002",
+//               text: "Malaysia"
+//             },
+//             {
+//               uuid: "003",
+//               text: "Singapore"
+//             }
+//           ]
+//         }
+//       },
+//       {
+//         id: 2,
+//         type: "checkbox",
+//         question: "From Which country you are",
+//         description: null,
+//         data: {
+//           options: [
+//             {uuid: "001", text: "Indonesia" },
+//             {
+//               uuid: "002",
+//               text: "Malaysia"
+//             },
+//             {
+//               uuid: "003",
+//               text: "Singapore"
+//             }
+//           ]
+//         }
+//       }
+//     ]
+//   },
+//   {
+//     id: 100,
+//     title: "Muhammad Ramadan Yosi Pratama",
+//     slug: "muhammad-ramadan-yosi-pratama",
+//     status: "draft",
+//     image: "https://pbs.twimg.com/profile_images/1118059535003017221/9ZwEYqj2_400x400.png",
+//     description: "Nama gua adalah rama. <br>Gua adalah web developer",
+//     created_at: "2022-02-02 18:00:00",
+//     updated_at: "2022-02-02 18:00:00",
+//     expire_date: "2022-02-02 18:00:00",
+//     questions: [
+//       {
+//         id: 1,
+//         type: "select",
+//         question: "From Which country you are",
+//         description: null,
+//         data: {
+//           options: [
+//             {uuid: "001", text: "Indonesia" },
+//             {
+//               uuid: "002",
+//               text: "Malaysia"
+//             },
+//             {
+//               uuid: "003",
+//               text: "Singapore"
+//             }
+//           ]
+//         }
+//       },
+//       {
+//         id: 2,
+//         type: "checkbox",
+//         question: "From Which country you are",
+//         description: null,
+//         data: {
+//           options: [
+//             {uuid: "001", text: "Indonesia" },
+//             {
+//               uuid: "002",
+//               text: "Malaysia"
+//             },
+//             {
+//               uuid: "003",
+//               text: "Singapore"
+//             }
+//           ]
+//         }
+//       }
+//     ]
+//   },
+//   {
+//     id: 100,
+//     title: "Muhammad Ramadan Yosi Pratama",
+//     slug: "muhammad-ramadan-yosi-pratama",
+//     status: "draft",
+//     image: "https://pbs.twimg.com/profile_images/1118059535003017221/9ZwEYqj2_400x400.png",
+//     description: "Nama gua adalah rama. <br>Gua adalah web developer",
+//     created_at: "2022-02-02 18:00:00",
+//     updated_at: "2022-02-02 18:00:00",
+//     expire_date: "2022-02-02 18:00:00",
+//     questions: [
+//       {
+//         id: 1,
+//         type: "select",
+//         question: "From Which country you are",
+//         description: null,
+//         data: {
+//           options: [
+//             {uuid: "001", text: "Indonesia" },
+//             {
+//               uuid: "002",
+//               text: "Malaysia"
+//             },
+//             {
+//               uuid: "003",
+//               text: "Singapore"
+//             }
+//           ]
+//         }
+//       },
+//       {
+//         id: 2,
+//         type: "checkbox",
+//         question: "From Which country you are",
+//         description: null,
+//         data: {
+//           options: [
+//             {uuid: "001", text: "Indonesia" },
+//             {
+//               uuid: "002",
+//               text: "Malaysia"
+//             },
+//             {
+//               uuid: "003",
+//               text: "Singapore"
+//             }
+//           ]
+//         }
+//       }
+//     ]
+//   },
+//   {
+//     id: 100,
+//     title: "Muhammad Ramadan Yosi Pratama",
+//     slug: "muhammad-ramadan-yosi-pratama",
+//     status: "draft",
+//     image: "https://pbs.twimg.com/profile_images/1118059535003017221/9ZwEYqj2_400x400.png",
+//     description: "Nama gua adalah rama. <br>Gua adalah web developer",
+//     created_at: "2022-02-02 18:00:00",
+//     updated_at: "2022-02-02 18:00:00",
+//     expire_date: "2022-02-02 18:00:00",
+//     questions: [
+//       {
+//         id: 1,
+//         type: "select",
+//         question: "From Which country you are",
+//         description: null,
+//         data: {
+//           options: [
+//             {uuid: "001", text: "Indonesia" },
+//             {
+//               uuid: "002",
+//               text: "Malaysia"
+//             },
+//             {
+//               uuid: "003",
+//               text: "Singapore"
+//             }
+//           ]
+//         }
+//       },
+//       {
+//         id: 2,
+//         type: "checkbox",
+//         question: "From Which country you are",
+//         description: null,
+//         data: {
+//           options: [
+//             {uuid: "001", text: "Indonesia" },
+//             {
+//               uuid: "002",
+//               text: "Malaysia"
+//             },
+//             {
+//               uuid: "003",
+//               text: "Singapore"
+//             }
+//           ]
+//         }
+//       }
+//     ]
+//   }
+// ];
